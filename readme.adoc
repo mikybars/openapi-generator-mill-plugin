@@ -1,0 +1,73 @@
+= OpenApi
+
+Simple https://mill-build.org/[Mill] plugin for generating source files from a OpenApi spec.
+
+Just extend `OpenApiModule` and declare an `OpenApiConfig` object
+
+.`build.mill`
+[source,scala]
+----
+//| mill-version: 1.0.2
+//| mvnDeps: ["io.github.mikybars::openapi-generator-mill-plugin::0.1.0"]
+
+package build
+
+import mill._, scalalib._
+import mill.api.BuildCtx
+
+import io.github.mikybars.mill.openapi.OpenApiModule
+
+object foo extends JavaModule, OpenApiModule {
+
+  object openapi extends OpenApiConfig {
+     def inputSpec = Task.Source(BuildCtx.workspaceRoot / "api/rest/v1/openapi.yml")
+
+    def apiPackage: T[String] = "com.example.foo.rest.api"
+
+    def modelPackage: T[String] = "com.example.foo.rest.model"
+
+    def generatorName: T[String] = "spring"
+
+    def modelNameSuffix: T[String] = "Dto"
+
+    def additionalProperties: T[Map[String, String]] = Map(
+      // ...
+      "useSpringBoot3" -> "true",
+      // ...
+    )
+  }
+
+}
+----
+
+Then
+[source,console]
+----
+$ ./mill foo.openapi.generate
+----
+
+Alternatively, if you'd like to hook up the `generate` task into the Mill build process, just override the `generatedSources` builtin task:
+
+`build.mill`
+[source,scala]
+----
+object foo extends JavaModule, OpenApiModule {
+
+    object openapi extends OpenApiConfig
+
+    // ...
+
+    override def generatedSources: T[Seq[PathRef]] = Seq(
+      PathRef(Task.dest),
+      openapi.generate()
+    )}
+}
+----
+
+And then
+[source,console]
+----
+$ ./mill foo.compile  # or foo.run, foo.test ...
+----
+
+With the above configuration, source files will be output into the `out/foo/openapi/generate.dest` folder.

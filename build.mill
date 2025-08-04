@@ -1,0 +1,28 @@
+//| mill-version: 1.0.2
+package build
+
+import mill.*, scalalib.*, publish.*
+import mill.util.BuildInfo.{millVersion, millBinPlatform}
+
+object `openapi-generator-mill-plugin` extends ScalaModule, PublishModule {
+  def scalaVersion = "3.7.1"
+
+  def platformSuffix = s"_mill$millBinPlatform"
+
+  def mvnDeps: T[Seq[Dep]] = Seq(
+    mvn"com.lihaoyi::mill-libs:$millVersion",
+    mvn"org.openapitools:openapi-generator:7.14.0",
+    mvn"ch.qos.logback:logback-classic:1.5.18",
+  )
+
+  def publishVersion = "0.1.0"
+
+  def pomSettings: T[PomSettings] = PomSettings(
+    description = "OpenApi generator Mill Plugin",
+    organization = "io.github.mikybars",
+    url = "https://github.com/mikybars/openapi-generator-mill-plugin",
+    licenses = Seq(License.MIT),
+    versionControl = VersionControl.github("mikybars", "openapi-generator-mill-plugin"),
+    developers = Seq(Developer("mikybars", "Miguel Ibars", "https://github.com/mikybars"))
+  )
+}
