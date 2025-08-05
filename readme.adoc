@@ -1,6 +1,6 @@
 = OpenApi
 
-Simple https://mill-build.org/[Mill] plugin for generating source files from a OpenApi spec.
+Simple https://mill-build.org/[Mill] plugin for generating source files from an https://www.openapis.org/[OpenApi] spec.
 
 Just extend `OpenApiModule` and declare an `OpenApiConfig` object
 
