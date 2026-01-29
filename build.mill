@@ -1,4 +1,4 @@
-//| mill-version: 1.0.2
+//| mill-version: 1.0.6
 package build
 
 import mill.*, scalalib.*, publish.*
