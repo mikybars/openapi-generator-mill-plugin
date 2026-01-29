@@ -5,7 +5,7 @@ import mill.*, scalalib.*, publish.*
 import mill.util.BuildInfo.{millVersion, millBinPlatform}
 
 object `openapi-generator-mill-plugin` extends ScalaModule, PublishModule {
-  def scalaVersion = "3.7.1"
+  def scalaVersion = "3.7.4"
 
   def platformSuffix = s"_mill$millBinPlatform"
 
