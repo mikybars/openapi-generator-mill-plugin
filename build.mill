@@ -12,7 +12,7 @@ object `openapi-generator-mill-plugin` extends ScalaModule, PublishModule {
   def mvnDeps: T[Seq[Dep]] = Seq(
     mvn"com.lihaoyi::mill-libs:$millVersion",
     mvn"org.openapitools:openapi-generator:7.14.0",
-    mvn"ch.qos.logback:logback-classic:1.5.18",
+    mvn"ch.qos.logback:logback-classic:1.5.38",
   )
 
   def publishVersion = "0.1.0"
